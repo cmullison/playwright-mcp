@@ -71,6 +71,7 @@ type Options = {
   executablePath?: string;
   cdpEndpoint?: string;
   vision?: boolean;
+  userAgent?: string;
   capabilities?: ToolCapability[];
 };
 
@@ -123,6 +124,7 @@ export async function createServer(options?: Options): Promise<Server> {
     userDataDir,
     launchOptions,
     cdpEndpoint: options?.cdpEndpoint,
+    userAgent: options?.userAgent,
   });
 }
 

@@ -29,6 +29,7 @@ export type ContextOptions = {
   launchOptions?: playwright.LaunchOptions;
   cdpEndpoint?: string;
   remoteEndpoint?: string;
+  userAgent?: string;
 };
 
 type PageOrFrameLocator = playwright.Page | playwright.FrameLocator;
@@ -304,7 +305,13 @@ ${code.join('\n')}
   private async _launchPersistentContext(): Promise<playwright.BrowserContext> {
     try {
       const browserType = this.options.browserName ? playwright[this.options.browserName] : playwright.chromium;
-      return await browserType.launchPersistentContext(this.options.userDataDir, this.options.launchOptions);
+      const contextOptions: any = { ...this.options.launchOptions };
+
+      // Set user agent - use provided one or default to macOS Chrome
+      const defaultMacUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+      contextOptions.userAgent = this.options.userAgent || defaultMacUserAgent;
+
+      return await browserType.launchPersistentContext(this.options.userDataDir, contextOptions);
     } catch (error: any) {
       if (error.message.includes('Executable doesn\'t exist'))
         throw new Error(`Browser specified in your config is not installed. Either install it (likely) or change the config.`);

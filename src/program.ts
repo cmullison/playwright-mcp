@@ -38,6 +38,7 @@ program
     .option('--executable-path <path>', 'Path to the browser executable.')
     .option('--headless', 'Run browser in headless mode, headed by default')
     .option('--port <port>', 'Port to listen on for SSE transport.')
+    .option('--user-agent <agent>', 'Custom user agent string to use')
     .option('--user-data-dir <path>', 'Path to the user data directory')
     .option('--vision', 'Run server that uses screenshots (Aria snapshots are used by default)')
     .action(async options => {
@@ -48,6 +49,7 @@ program
         executablePath: options.executablePath,
         vision: !!options.vision,
         cdpEndpoint: options.cdpEndpoint,
+        userAgent: options.userAgent,
         capabilities: options.caps?.split(',').map((c: string) => c.trim() as ToolCapability),
       }));
       setupExitWatchdog(serverList);

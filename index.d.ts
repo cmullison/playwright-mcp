@@ -45,6 +45,10 @@ type Options = {
      */
     vision?: boolean;
     /**
+     * Custom user agent string to use in the browser context.
+     */
+    userAgent?: string;
+    /**
      * List of enabled tool capabilities. Possible values:
      *   - 'core': Core browser automation features.
      *   - 'tabs': Tab management features.
